@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luna新年晚餐 | Luna's New Year Dinner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #8B0000 0%, #D4AF37 50%, #8B0000 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: linear-gradient(180deg, #FFF8DC 0%, #FFFACD 100%);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border: 5px solid #D4AF37;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            color: #8B0000;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.3em;
+            color: #D4AF37;
+            font-style: italic;
+        }
+        
+        .date {
+            font-size: 1.1em;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        .decorations {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            right: 0;
+            font-size: 1.8em;
+            display: flex;
+            justify-content: space-between;
+            opacity: 0.8;
+        }
+        
+        .menu-section {
+            margin: 25px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #FFFEF0 0%, #FFFAF0 100%);
+            border-radius: 15px;
+            border-left: 5px solid #D4AF37;
+        }
+        
+        .section-title {
+            font-size: 1.6em;
+            color: #8B0000;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title .number {
+            background: #D4AF37;
+            color: #8B0000;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .menu-item {
+            padding: 12px 0;
+            border-bottom: 1px dashed #D4AF37;
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+        
+        .menu-item .dish-name {
+            color: #333;
+            font-size: 1.1em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .menu-item .dish-name:hover {
+            color: #8B0000;
+        }
+        
+        .menu-item .photo-icon {
+            font-size: 0.8em;
+            opacity: 0.5;
+        }
+        
+        .menu-item .en {
+            color: #888;
+            font-size: 0.95em;
+            font-style: italic;
+        }
+        
+        .menu-item .detail {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+            padding-left: 15px;
+            border-left: 3px solid #D4AF37;
+        }
+        
+        .photo-section {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .photo-section.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .photo-placeholder {
+            width: 100%;
+            max-width: 400px;
+            height: 250px;
+            background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+            border: 2px dashed #D4AF37;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            color: #999;
+        }
+        
+        .photo-placeholder .camera-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        
+        .photo-placeholder p {
+            font-size: 0.9em;
+        }
+        
+        .photo-display {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .drinks {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, #8B0000 0%, #A52A2A 100%);
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        
+        .drinks h3 {
+            color: #D4AF37;
+            font-size: 1.6em;
+            margin-bottom: 15px;
+        }
+        
+        .drinks p {
+            color: #FFF;
+            font-size: 1.1em;
+            margin: 8px 0;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 2px solid #D4AF37;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        /* 上传按钮 - 默认隐藏 */
+        .photo-upload {
+            display: none;
+        }
+        
+        /* 显示上传按钮的类 - 只有管理员模式才显示 */
+        .show-upload .photo-upload {
+            display: block;
+        }
+        
+        .photo-upload {
+            margin-top: 10px;
+        }
+        
+        .photo-upload label {
+            display: inline-block;
+            padding: 8px 20px;
+            background: #D4AF37;
+            color: #8B0000;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s;
+        }
+        
+        .photo-upload label:hover {
+            background: #c9a432;
+        }
+        
+        .fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.3;
+            background-image: 
+                radial-gradient(circle at 10% 20%, gold 2px, transparent 2px),
+                radial-gradient(circle at 20% 80%, red 2px, transparent 2px),
+                radial-gradient(circle at 80% 20%, gold 2px, transparent 2px),
+                radial-gradient(circle at 90% 70%, red 2px, transparent 2px),
+                radial-gradient(circle at 50% 50%, gold 3px, transparent 3px);
+            background-size: 200px 200px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .decorations {
+                font-size: 1.2em;
+            }
+            
+            .menu-header {
+                flex-direction: column;
+                gap: 3px;
+            }
+            
+            .menu-item .detail {
+                padding-left: 12px;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="fireworks"></div>
+    
+    <div class="container" id="menu-container">
+        <div class="header">
+            <div class="decorations">
+                🧧 ✨ 🧧
+            </div>
+            <h1>🎊 Luna新年晚餐 🎊</h1>
+            <p class="subtitle">Luna's New Year Dinner</p>
+            <p class="date">2026年2月15日 | February 15, 2026</p>
+        </div>
+        
+        <div class="menu-section">
+            <div class="section-title">
+                <span class="number">1</span>
+                开胃 Appetizers
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-header" onclick="togglePhoto(this)">
+                    <span class="dish-name">凉拌海带 <span class="photo-icon">📷</span></span>
+                    <span class="en">Seaweed Salad</span>
+                </div>
+                <div class="detail">清脆爽口，开胃小菜 | Crisp and refreshing appetizer</div>
+                <div class="photo-section show" id="photo-1">
+                    <img src="seaweed-salad.png" class="photo-display" alt="凉拌海带">
+                    <div class="photo-upload">
+                        <label for="upload-1">📷 更新照片 Update Photo</label>
+                        <input type="file" id="upload-1" accept="image/*" onchange="handleUpload(this, 'photo-1')">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-header" onclick="togglePhoto(this)">
+                    <span class="dish-name">茶叶蛋 <span class="photo-icon">📷</span></span>
+                    <span class="en">Tea Eggs</span>
+                </div>
+                <div class="detail">香料卤制，茶叶清香 | Braised with star anise, cinnamon, tea leaves</div>
+                <div class="photo-section" id="photo-2">
+                    <div class="photo-placeholder" id="placeholder-2">
+                        <span class="camera-icon">📷</span>
+                        <p>点击下方按钮上传照片</p>
+                        <p>Click below to upload photo</p>
+                    </div>
+                    <div class="photo-upload">
+                        <label for="upload-2">📷 上传照片 Upload Photo</label>
+                        <input type="file" id="upload-2" accept="image/*" onchange="handleUpload(this, 'photo-2')">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-header" onclick="togglePhoto(this)">
+                    <span class="dish-name">煎年糕 <span class="photo-icon">📷</span></span>
+                    <span class="en">Pan-Fried Rice Cake</span>
+                </div>
+                <div class="detail">年糕由糯米和红糖制作，外酥里软，寓意年年高升 | Glutinous rice with brown sugar, crispy outside, chewy inside - symbolizing progress</div>
+                <div class="photo-section" id="photo-3">
+                    <div class="photo-placeholder" id="placeholder-3">
+                        <span class="camera-icon">📷</span>
+                        <p>点击下方按钮上传照片</p>
+                        <p>Click below to upload photo</p>
+                    </div>
+                    <div class="photo-upload">
+                        <label for="upload-3">📷 上传照片 Upload Photo</label>
+                        <input type="file" id="upload-3" accept="image/*" onchange="handleUpload(this, 'photo-3')">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <div class="section-title">
+                <span class="number">2</span>
+                汤品 Soups
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-header" onclick="togglePhoto(this)">
+                    <span class="dish-name">佛跳墙 <span class="photo-icon">📷</span></span>
+                    <span class="en">Buddha Jumps Over the Wall</span>
+                </div>
+                <div class="detail">海参、鲍鱼、鱼胶、花胶、瑶柱、火腿、老鸡、猪皮等十余种珍贵食材，文火慢炖24小时 | Sea cucumber, abalone, fish maw, scallops, ham, old hen, pork skin - 24-hour simmer</div>
+                <div class="photo-section" id="photo-4">
+                    <div class="photo-placeholder" id="placeholder-4">
+                        <span class="camera-icon">📷</span>
+                        <p>点击下方按钮上传照片</p>
+                        <p>Click below to upload photo</p>
+                    </div>
+                    <div class="photo-upload">
+                        <label for="upload-4">📷 上传照片 Upload Photo</label>
+                        <input type="file" id="upload-4" accept="image/*" onchange="handleUpload(this, 'photo-4')">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-header" onclick="togglePhoto(this)">
+                    <span class="dish-name">福建鱼丸汤 <span class="photo-icon">📷</span></span>
+                    <span class="en">Fujian Fish Ball Soup</span>
+                </div>
+                <div class="detail">手打鱼丸，鲜美汤底（不吃牛肉宾客专属）| Handmade fish balls in clear broth (for non-beef guests)</div>
+                <div class="photo-section" id="photo-5">
+                    <div class="photo-placeholder" id="placeholder-5">
+                        <span class="camera-icon">📷</span>
+                        <p>点击下方按钮上传照片</p>
+                        <p>Click below to upload photo</p>
+                    </div>
+                    <div class="photo-upload">
+                        <label for="upload-5">📷 上传照片 Upload Photo</label>
+                        <input type="file" id="upload-5" accept="image/*" onchange="handleUpload(this, 'photo-5')">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <div class="section-title">
+                <span class="number">3</span>
+                鱼类双响 Fish Dishes
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-header" onclick="togglePhoto(this)">
+                    <span class="dish-name">清蒸鱼 <span class="photo-icon">📷</span></span>
+                    <span class="en">Steamed Fish (Plain)</span>
+                </div>
+                <div class="detail">开背清江鱼，淋上热葱油和蒸鱼豉油 | Split-body steamed fish, topped with hot scallion oil and soy sauce</div>
+                <div class="photo-section" id="photo-6">
+                    <div class="photo-placeholder" id="placeholder-6">
+                        <span class="camera-icon">📷</span>
+                        <p>点击下方按钮上传照片</p>
+                        <p>Click below to upload photo</p>
+                    </div>
+                    <div class="photo-upload">
+                        <label for="upload-6">📷 上传照片 Upload Photo</label>
+                        <input type="file" id="upload-6" accept="image/*" onchange="handleUpload(this, 'photo-6')">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-header" onclick="togglePhoto(this)">
+                    <span class="dish-name">剁椒鱼 <span class="photo-icon">📷</span></span>
+                    <span class="en">Steamed Fish (Chili Sauce)</span>
+                </div>
+                <div class="detail">秘制剁椒酱铺满鱼身，酸辣鲜香 | Homemade fermented chili sauce covering the fish, spicy and aromatic</div>
+                <div class="photo-section" id="photo-7">
+                    <div class="photo-placeholder" id="placeholder-7">
+                        <span class="camera-icon">📷</span>
+                        <p>点击下方按钮上传照片</p>
+                        <p>Click below to upload photo</p>
+                    </div>
+                    <div class="photo-upload">
+                        <label for="upload-7">📷 上传照片 Upload Photo</label>
+                        <input type="file" id="upload-7" accept="image/*" onchange="handleUpload(this, 'photo-7')">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-header" onclick="togglePhoto(this)">
+                    <span class="dish-name">清炒豆苗 <span class="photo-icon">📷</span></span>
+                    <span class="en">Sautéed Pea Shoots</span>
+                </div>
+                <div class="detail">蒜蓉快炒，保留鲜嫩 | Quickly wok-fried with garlic, keeping them tender</div>
+                <div class="photo-section" id="photo-8">
+                    <div class="photo-placeholder" id="placeholder-8">
+                        <span class="camera-icon">📷</span>
+                        <p>点击下方按钮上传照片</p>
+                        <p>Click below to upload photo</p>
+                    </div>
+                    <div class="photo-upload">
+                        <label for="upload-8">📷 上传照片 Upload Photo</label>
+                        <input type="file" id="upload-8" accept="image/*" onchange="handleUpload(this, 'photo-8')">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <div class="section-title">
+                <span class="number">4</span>
+                硬菜 Main Courses
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-header" onclick="togglePhoto(this)">
+                    <span class="dish-name">广式烧鸭 <span class="photo-icon">📷</span></span>
+                    <span class="en">Cantonese Roast Duck</span>
+                </div>
+                <div class="detail">皮脆肉嫩，经典粤式烧腊 | Crispy skin, tender meat - classic Cantonese style</div>
+                <div class="photo-section" id="photo-9">
+                    <div class="photo-placeholder" id="placeholder-9">
+                        <span class="camera-icon">📷</span>
+                        <p>点击下方按钮上传照片</p>
+                        <p>Click below to upload photo</p>
+                    </div>
+                    <div class="photo-upload">
+                        <label for="upload-9">📷 上传照片 Upload Photo</label>
+                        <input type="file" id="upload-9" accept="image/*" onchange="handleUpload(this, 'photo-9')">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-header" onclick="togglePhoto(this)">
+                    <span class="dish-name">红焖羊肉 <span class="photo-icon">📷</span></span>
+                    <span class="en">Braised Lamb</span>
+                </div>
+                <div class="detail">中东店选购优质羊肉，红酒香料慢炖 | Premium lamb from Middle Eastern market, braised with red wine and spices</div>
+                <div class="photo-section" id="photo-10">
+                    <div class="photo-placeholder" id="placeholder-10">
+                        <span class="camera-icon">📷</span>
+                        <p>点击下方按钮上传照片</p>
+                        <p>Click below to upload photo</p>
+                    </div>
+                    <div class="photo-upload">
+                        <label for="upload-10">📷 上传照片 Upload Photo</label>
+                        <input type="file" id="upload-10" accept="image/*" onchange="handleUpload(this, 'photo-10')">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-header" onclick="togglePhoto(this)">
+                    <span class="dish-name">翠花排骨 <span class="photo-icon">📷</span></span>
+                    <span class="en">Cui Hua Ribs</span>
+                </div>
+                <div class="detail">Costco猪肋排，秘制酱料腌制后烤制 | Pork ribs from Costco, marinated with special sauce then baked</div>
+                <div class="photo-section" id="photo-11">
+                    <div class="photo-placeholder" id="placeholder-11">
+                        <span class="camera-icon">📷</span>
+                        <p>点击下方按钮上传照片</p>
+                        <p>Click below to upload photo</p>
+                    </div>
+                    <div class="photo-upload">
+                        <label for="upload-11">📷 上传照片 Upload Photo</label>
+                        <input type="file" id="upload-11" accept="image/*" onchange="handleUpload(this, 'photo-11')">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-header" onclick="togglePhoto(this)">
+                    <span class="dish-name">辣子鸡丁 <span class="photo-icon">📷</span></span>
+                    <span class="en">Spicy Chicken with Peanuts</span>
+                </div>
+                <div class="detail">鸡丁酥脆，花生香辣，下饭神器 | Crispy chicken chunks with roasted peanuts, Sichuan-style spicy</div>
+                <div class="photo-section" id="photo-12">
+                    <div class="photo-placeholder" id="placeholder-12">
+                        <span class="camera-icon">📷</span>
+                        <p>点击下方按钮上传照片</p>
+                        <p>Click below to upload photo</p>
+                    </div>
+                    <div class="photo-upload">
+                        <label for="upload-12">📷 上传照片 Upload Photo</label>
+                        <input type="file" id="upload-12" accept="image/*" onchange="handleUpload(this, 'photo-12')">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-header" onclick="togglePhoto(this)">
+                    <span class="dish-name">清炒油菜苗 <span class="photo-icon">📷</span></span>
+                    <span class="en">Sautéed Baby Bok Choy</span>
+                </div>
+                <div class="detail">嫩绿爽口，简约不简单 | Tender green, simply prepared</div>
+                <div class="photo-section" id="photo-13">
+                    <div class="photo-placeholder" id="placeholder-13">
+                        <span class="camera-icon">📷</span>
+                        <p>点击下方按钮上传照片</p>
+                        <p>Click below to upload photo</p>
+                    </div>
+                    <div class="photo-upload">
+                        <label for="upload-13">📷 上传照片 Upload Photo</label>
+                        <input type="file" id="upload-13" accept="image/*" onchange="handleUpload(this, 'photo-13')">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <div class="section-title">
+                <span class="number">5</span>
+                蒸菜 Steamed Dishes
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-header" onclick="togglePhoto(this)">
+                    <span class="dish-name">福建酿肉蒸蛋 <span class="photo-icon">📷</span></span>
+                    <span class="en">Fujian Steamed Eggs with Meat</span>
+                </div>
+                <div class="detail">肉馅铺底，嫩滑蒸蛋覆盖其上 | Ground pork beneath, silky steamed egg on top</div>
+                <div class="photo-section" id="photo-14">
+                    <div class="photo-placeholder" id="placeholder-14">
+                        <span class="camera-icon">📷</span>
+                        <p>点击下方按钮上传照片</p>
+                        <p>Click below to upload photo</p>
+                    </div>
+                    <div class="photo-upload">
+                        <label for="upload-14">📷 上传照片 Upload Photo</label>
+                        <input type="file" id="upload-14" accept="image/*" onchange="handleUpload(this, 'photo-14')">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-header" onclick="togglePhoto(this)">
+                    <span class="dish-name">虾滑酿彩椒 <span class="photo-icon">📷</span></span>
+                    <span class="en">Shrimp-Stuffed Bell Peppers</span>
+                </div>
+                <div class="detail">彩椒为盅，填入手打虾滑，蒸制入味 | Bell peppers as bowls, filled with hand-ground shrimp paste, steamed</div>
+                <div class="photo-section" id="photo-15">
+                    <div class="photo-placeholder" id="placeholder-15">
+                        <span class="camera-icon">📷</span>
+                        <p>点击下方按钮上传照片</p>
+                        <p>Click below to upload photo</p>
+                    </div>
+                    <div class="photo-upload">
+                        <label for="upload-15">📷 上传照片 Upload Photo</label>
+                        <input type="file" id="upload-15" accept="image/*" onchange="handleUpload(this, 'photo-15')">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-header" onclick="togglePhoto(this)">
+                    <span class="dish-name">擂辣椒皮蛋 <span class="photo-icon">📷</span></span>
+                    <span class="en">Pounded Smoked Peppers with Eggs</span>
+                </div>
+                <div class="detail">虎皮辣椒配皮蛋，擂钵捣碎 | Blistered peppers smashed with preserved eggs in a mortar</div>
+                <div class="photo-section" id="photo-16">
+                    <div class="photo-placeholder" id="placeholder-16">
+                        <span class="camera-icon">📷</span>
+                        <p>点击下方按钮上传照片</p>
+                        <p>Click below to upload photo</p>
+                    </div>
+                    <div class="photo-upload">
+                        <label for="upload-16">📷 上传照片 Upload Photo</label>
+                        <input type="file" id="upload-16" accept="image/*" onchange="handleUpload(this, 'photo-16')">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <div class="section-title">
+                <span class="number">6</span>
+                主食 Main Dishes
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-header" onclick="togglePhoto(this)">
+                    <span class="dish-name">老北京打卤面 <span class="photo-icon">📷</span></span>
+                    <span class="en">Beijing Noodles with Savory Gravy</span>
+                </div>
+                <div class="detail">豆干、五花肉、老豆腐打卤，手工面条 | Dried tofu, pork belly, old tofu gravy over hand-pulled noodles</div>
+                <div class="photo-section" id="photo-17">
+                    <div class="photo-placeholder" id="placeholder-17">
+                        <span class="camera-icon">📷</span>
+                        <p>点击下方按钮上传照片</p>
+                        <p>Click below to upload photo</p>
+                    </div>
+                    <div class="photo-upload">
+                        <label for="upload-17">📷 上传照片 Upload Photo</label>
+                        <input type="file" id="upload-17" accept="image/*" onchange="handleUpload(this, 'photo-17')">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-header" onclick="togglePhoto(this)">
+                    <span class="dish-name">猪肉炒茭白 <span class="photo-icon">📷</span></span>
+                    <span class="en">Pork with Water Bamboo Shoots</span>
+                </div>
+                <div class="detail">茭白切片与肉片同炒，时令美味 | Sliced water bamboo shoots stir-fried with pork</div>
+                <div class="photo-section" id="photo-18">
+                    <div class="photo-placeholder" id="placeholder-18">
+                        <span class="camera-icon">📷</span>
+                        <p>点击下方按钮上传照片</p>
+                        <p>Click below to upload photo</p>
+                    </div>
+                    <div class="photo-upload">
+                        <label for="upload-18">📷 上传照片 Upload Photo</label>
+                        <input type="file" id="upload-18" accept="image/*" onchange="handleUpload(this, 'photo-18')">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-header" onclick="togglePhoto(this)">
+                    <span class="dish-name">汤饺子 - 干贝鲜虾 <span class="photo-icon">📷</span></span>
+                    <span class="en">Dumplings - Shrimp & Scallop</span>
+                </div>
+                <div class="detail">干贝提鲜，手剥虾仁 | Dried scallops enhance umami, hand-peeled shrimp</div>
+                <div class="photo-section" id="photo-19">
+                    <div class="photo-placeholder" id="placeholder-19">
+                        <span class="camera-icon">📷</span>
+                        <p>点击下方按钮上传照片</p>
+                        <p>Click below to upload photo</p>
+                    </div>
+                    <div class="photo-upload">
+                        <label for="upload-19">📷 上传照片 Upload Photo</label>
+                        <input type="file" id="upload-19" accept="image/*" onchange="handleUpload(this, 'photo-19')">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-header" onclick="togglePhoto(this)">
+                    <span class="dish-name">汤饺子 - 猪肉白菜 <span class="photo-icon">📷</span></span>
+                    <span class="en">Dumplings - Pork & Cabbage</span>
+                </div>
+                <div class="detail">经典馅料，汁多味美 | Classic filling, juicy and delicious</div>
+                <div class="photo-section" id="photo-20">
+                    <div class="photo-placeholder" id="placeholder-20">
+                        <span class="camera-icon">📷</span>
+                        <p>点击下方按钮上传照片</p>
+                        <p>Click below to upload photo</p>
+                    </div>
+                    <div class="photo-upload">
+                        <label for="upload-20">📷 上传照片 Upload Photo</label>
+                        <input type="file" id="upload-20" accept="image/*" onchange="handleUpload(this, 'photo-20')">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <div class="section-title">
+                <span class="number">7</span>
+                甜点 Dessert
+            </div>
+            
+            <div class="menu-item" style="justify-content: center; padding: 20px 0;">
+                <span class="dish-name" style="font-size: 1.3em; color: #8B0000;">甜品 Dessert</span>
+            </div>
+        </div>
+        
+        <div class="drinks">
+            <h3>🥤 饮料 Beverages</h3>
+            <p>元气森林 Yuan Qi Forest | Sparkling water with natural flavors</p>
+            <p>老罗特调 Daryl's Special | Daryl's secret recipe cocktail/mocktail</p>
+        </div>
+        
+        <div class="footer">
+            <p>🎉 祝大家新年快乐！Happy New Year! 🎉</p>
+            <p>🍚 21位贵宾 | 21 Guests</p>
+            <p style="margin-top: 10px; font-size: 0.8em; color: #999;">👨‍🍳 <a href="?admin=true" style="color: #999; text-decoration: none;">Chef Mode</a></p>
+        </div>
+    </div>
+    
+    <script>
+        // 检查是否为管理员模式
+        const urlParams = new URLSearchParams(window.location.search);
+        const isAdmin = urlParams.get('admin') === 'true';
+        
+        if (isAdmin) {
+            document.getElementById('menu-container').classList.add('show-upload');
+        }
+        
+        function togglePhoto(element) {
+            const photoSection = element.nextElementSibling.nextElementSibling;
+            photoSection.classList.toggle('show');
+        }
+        
+        function handleUpload(input, photoId) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const photoSection = document.getElementById(photoId);
+                    const placeholder = photoSection.querySelector('.photo-placeholder');
+                    placeholder.innerHTML = '<img src="' + e.target.result + '" class="photo-display" alt="Dish Photo">';
+                    placeholder.style.background = 'transparent';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</body>
+</html>
