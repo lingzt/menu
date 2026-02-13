@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/luna-newyear-dinner.html" }
+  ]
+}
